@@ -42,12 +42,14 @@ import {mapActions} from "vuex";
 import {get} from 'vuex-pathify'
 export default {
   name: 'LoginPage',
+
   data: () => ({
     credentials:{
       username:'',
       password:''
     }
   }),
+
   computed:{
     message:get('authuser/statusmessge'),
   },

@@ -60,6 +60,7 @@ export const authuser = {
                   commit('bearer', response.data)
                   LoginApi.user().then(response => {
                       commit('user', response.data)
+                      commit('isAuthenticated', true)
                       router.push({name:'homepage'})
                   }).catch(error => {
                       commit('statusmessge',error.response.data.error)

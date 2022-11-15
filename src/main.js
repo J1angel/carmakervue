@@ -7,7 +7,7 @@ import store from "./store"
 Vue.config.productionTip = false
 
 Vue.use(router)
-
+Vue.component('nav-bar', require('./components/NavigationView.vue').default);
 new Vue({
   vuetify,
   store,
