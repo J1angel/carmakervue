@@ -96,7 +96,6 @@ import {get} from 'vuex-pathify'
 import {mapActions} from "vuex";
 import TypeApi from "@/apilinks/type"
 export default {
-  name: 'HelloWorld',
   components:{
     "popper": Popper,
   },
@@ -152,7 +151,7 @@ export default {
       }
     },
     gettypes(){
-      this.sertype(this.search)
+      this.sertype2(this.search)
     },
     getpageadd(){
       this.changepage()

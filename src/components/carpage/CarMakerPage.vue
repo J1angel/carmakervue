@@ -35,7 +35,11 @@
           <TypePage ref="stud2"></TypePage>
         </v-card>
       </v-tab-item>
-
+      <v-tab-item>
+        <v-card flat>
+          <ColorPage ref="stud3"></ColorPage>
+        </v-card>
+      </v-tab-item>
     </v-tabs-items>
 
   </div>
@@ -44,6 +48,7 @@
 import CarPage from "@/components/carpage/CarPage"
 import ManufacterPage from "@/components/carpage/ManufacturerPage"
 import TypePage from "@/components/carpage/TypePage"
+import ColorPage from "@/components/carpage/ColorPage"
 import store from "@/store";
 import {mapActions} from "vuex";
 
@@ -56,12 +61,14 @@ export default {
     CarPage,
     ManufacterPage,
     TypePage,
+    ColorPage
   },
   data(){
     return {
       key0:0,
       key1:0,
       key2:0,
+      key3:0,
     }
   },
   computed:{
@@ -85,12 +92,17 @@ export default {
       }else if(key === 1){
         this.key1++
         if (this.key1 > 1){
-          this.$refs.stud1.initialize();
+          this.$refs.stud1.getmanufacturers();
         }
       }else if(key === 2){
         this.key2++
         if (this.key2 > 1){
           this.$refs.stud2.gettypes();
+        }
+      }else if(key === 3){
+        this.key3++
+        if (this.key3 > 1){
+          this.$refs.stud3.gettypes();
         }
       }
     },

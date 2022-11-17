@@ -21,7 +21,7 @@ export default{
   data () {
     return {
       items: [
-        'Car Maker', 'Manufacturers', 'Types'
+        'Car Maker', 'Manufacturers', 'Types', 'Color'
       ],
     }
   },
