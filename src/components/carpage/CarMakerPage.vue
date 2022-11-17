@@ -102,7 +102,7 @@ export default {
       }else if(key === 3){
         this.key3++
         if (this.key3 > 1){
-          this.$refs.stud3.gettypes();
+          this.$refs.stud3.getcolors();
         }
       }
     },
