@@ -55,9 +55,8 @@ export const authuser = {
 
     actions:{
       login({commit},credentials){
-          console.log(credentials)
           if (store.getters["authuser/isAuthenticated"]){
-              router.push({name:'homepage'})
+              router.push('/homepage')
           }else {
               LoginApi.login(credentials).then(response => {
                   commit('bearer', response.data)
