@@ -87,7 +87,7 @@ export default {
       if (key === 0){
         this.key0++
         if (this.key0 > 1){
-          this.$refs.stud.initialize();
+          this.$refs.stud.getcars();
         }
       }else if(key === 1){
         this.key1++
