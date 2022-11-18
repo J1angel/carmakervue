@@ -1,6 +1,14 @@
 import ManufacturerApi from '@/apilinks/manufacturer';
 
-
+const getDefaultState = () => {
+    return {
+        manufacturer:[],
+        page:1,
+        last_page:0,
+        current_url:'',
+        prev_url:''
+    }
+}
 export const manufacture = {
     namespaced: true,
     state: {
@@ -47,6 +55,9 @@ export const manufacture = {
         },
         SET_PREVURL(state, value){
             state.prev_url = value
+        },
+        resetState(state) {
+            Object.assign(state, getDefaultState())
         }
     },
 
@@ -81,6 +92,9 @@ export const manufacture = {
         revertpage({commit}){
             commit('SET_PAGE', 1)
         },
+        resetState({commit}){
+            commit('resetState')
+        }
     }
 
 }

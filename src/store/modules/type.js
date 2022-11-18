@@ -1,5 +1,13 @@
 import TypeApi from '@/apilinks/type';
-
+const getDefaultState = () => {
+    return {
+        type:[],
+        page:1,
+        last_page:0,
+        current_url:'',
+        prev_url:''
+    }
+}
 
 export const type = {
     namespaced: true,
@@ -47,6 +55,9 @@ export const type = {
         },
         SET_PREVURL(state, value){
             state.prev_url = value
+        },
+        resetState(state) {
+            Object.assign(state, getDefaultState())
         }
     },
 
@@ -81,6 +92,9 @@ export const type = {
         revertpage({commit}){
             commit('SET_PAGE', 1)
         },
+        resetState({commit}){
+            commit('resetState')
+        }
     }
 
 }

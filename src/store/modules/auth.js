@@ -2,14 +2,14 @@ import router from '@/routes';
 import LoginApi from '@/apilinks/loginapi'
 import store from "@/store";
 
-/*
 const getDefaultState = () => {
     return {
         isAuthenticated: false,
         userinfo:{},
-        bearer:''
+        bearer:'',
+        statusmessge:''
     }
-}*/
+}
 
 export const authuser = {
     namespaced: true,
@@ -47,6 +47,9 @@ export const authuser = {
         },
         statusmessge(state,value) {
             state.statusmessge = value
+        },
+        resetState(state) {
+            Object.assign(state, getDefaultState())
         }
     },
 
@@ -69,7 +72,16 @@ export const authuser = {
                   commit('statusmessge',error.response.data.error)
               })
           }
-      }
+      },
+        logoutuser({commit}){
+            commit('resetState')
+            store.dispatch('cars/resetState')
+            store.dispatch('color/resetState')
+            store.dispatch('manufacture/resetState')
+            store.dispatch('pageshis/resetState')
+            store.dispatch('type/resetState')
+            router.push('/')
+        }
     }
 }
 

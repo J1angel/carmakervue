@@ -1,4 +1,8 @@
-
+const getDefaultState = () => {
+    return {
+        tab:0,
+    }
+}
 export const pageshis = {
     namespaced: true,
     state: {
@@ -15,13 +19,21 @@ export const pageshis = {
         SET_TAB (state, value) {
             state.tab = value
         },
+        resetState(state) {
+            Object.assign(state, getDefaultState())
+        }
     },
 
     actions:{
         sertab({commit},key){
             commit("SET_TAB", key)
         },
+        resetState({commit}){
+            commit('resetState')
+        }
     }
+
+
 
 }
 
