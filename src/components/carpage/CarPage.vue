@@ -148,6 +148,22 @@
         </v-card>
       </template>
     </v-dialog>
+    <v-snackbars :objects.sync="objects"  top right>
+      <template v-slot:default="{ message }">
+        <v-layout align-center pr-4>
+          <v-icon class="pr-3" dark large>mdi-robot-angry</v-icon>
+          {{ message }}
+        </v-layout>
+      </template>
+    </v-snackbars>
+    <v-snackbars :objects.sync="objectss"  top right>
+      <template v-slot:default="{ message }">
+        <v-layout align-center pr-4>
+          <v-icon class="pr-3" dark large>mdi-hand-okay</v-icon>
+          {{ message }}
+        </v-layout>
+      </template>
+    </v-snackbars>
   </div>
 
 </template>
@@ -158,10 +174,12 @@ import {get} from 'vuex-pathify'
 import {mapActions} from "vuex";
 import CarsApi from "@/apilinks/cars"
 import OptionsApi from "@/apilinks/options"
+import VSnackbars from "v-snackbars";
 export default {
   name: 'HelloWorld',
   components:{
     "popper": Popper,
+    "v-snackbars": VSnackbars,
   },
   data() {
     return {
@@ -180,17 +198,15 @@ export default {
       manufacturers: [],
       colors:[],
       add:false,
+      objects:[],
+      objectss:[]
+
     }
   },
   computed:{
     cars:get('cars/cars'),
     page:get('cars/page'),
     last_page:get('cars/last_page'),
-  },
-  filters: {
-    highlight: function(value, query){
-      return value.replace(new RegExp(query, "ig"), '<span class=\'blue\'>' + query + '</span>')
-    },
   },
   watch:{
     'search.data': {
@@ -229,7 +245,11 @@ export default {
     addcars(){
       CarsApi.addcars(this.caradd).then(response => {
         this.add = false
-        console.log(response.data)
+        this.objectss.push({
+          message: response.data.message,
+          color:"green darken-2",
+          timeout:3000
+        })
 
         this.caradd={
           name:'',
@@ -239,27 +259,42 @@ export default {
         }
         this.sercars2(this.search)
       }).catch(error => {
-        console.log(error)
+        this.objects.push({
+          message:error.response.data.message,
+          color:"red darken-4",
+          timeout:3000
+        })
       })
     },
     openmodal(){
       OptionsApi.getoptions().then(response => {
-        console.log(response)
         this.manufacturers = response.data.optionsM
         this.colors = response.data.optionsC
         this.types = response.data.optionsT
       }).catch(error => {
-        console.log(error)
+        this.objects.push({
+          message:error.response.data.message,
+          color:"red darken-4",
+          timeout:3000
+        })
       })
       this.add = true
 
     },
     deletecars(item){
       CarsApi.deletecars(item).then(response => {
-        console.log(response.data)
+        this.objectss.push({
+          message: response.data.message,
+          color:"green darken-2",
+          timeout:3000
+        })
         this.sercars2(this.search)
       }).catch(error => {
-        console.log(error)
+        this.objects.push({
+          message:error.response.data.message,
+          color:"red darken-4",
+          timeout:3000
+        })
       })
     }
 

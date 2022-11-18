@@ -105,6 +105,22 @@
         </v-card>
       </template>
     </v-dialog>
+    <v-snackbars :objects.sync="objects"  top right>
+      <template v-slot:default="{ message }">
+        <v-layout align-center pr-4>
+          <v-icon class="pr-3" dark large>mdi-robot-angry</v-icon>
+          {{ message }}
+        </v-layout>
+      </template>
+    </v-snackbars>
+    <v-snackbars :objects.sync="objectss"  top right>
+      <template v-slot:default="{ message }">
+        <v-layout align-center pr-4>
+          <v-icon class="pr-3" dark large>mdi-hand-okay</v-icon>
+          {{ message }}
+        </v-layout>
+      </template>
+    </v-snackbars>
   </div>
 
 </template>
@@ -114,10 +130,12 @@ import 'vue-popperjs/dist/vue-popper.css';
 import {get} from 'vuex-pathify'
 import {mapActions} from "vuex";
 import ColorApi from "@/apilinks/color"
+import VSnackbars from "v-snackbars";
 export default {
   name: 'HelloWorld',
   components:{
     "popper": Popper,
+    "v-snackbars": VSnackbars,
   },
   data() {
     return {
@@ -133,6 +151,8 @@ export default {
       add:false,
       mask: '!#XXXXXXXX',
       menu: false,
+      objects:[],
+      objectss:[]
     }
   },
   computed:{
@@ -150,11 +170,6 @@ export default {
         transition: 'border-radius 200ms ease-in-out'
       }
     }
-  },
-  filters: {
-    highlight: function(value, query){
-      return value.replace(new RegExp(query, "ig"), '<span class=\'blue\'>' + query + '</span>')
-    },
   },
   watch:{
     'search.data': {
@@ -193,18 +208,34 @@ export default {
     addcolor(){
       ColorApi.addcolors(this.coloradd).then(response => {
         this.add = false
-        console.log(response.data)
+        this.objectss.push({
+          message: response.data.message,
+          color:"green darken-2",
+          timeout:3000
+        })
         this.sercolor2(this.search)
       }).catch(error => {
-        console.log(error)
+        this.objects.push({
+          message:error.response.data.message,
+          color:"red darken-4",
+          timeout:3000
+        })
       })
     },
     deletecolors(item){
       ColorApi.deletecolors(item).then(response => {
-        console.log(response.data)
+        this.objectss.push({
+          message: response.data.message,
+          color:"green darken-2",
+          timeout:3000
+        })
         this.sercolor2(this.search)
       }).catch(error => {
-        console.log(error)
+        this.objects.push({
+          message:error.response.data.message,
+          color:"red darken-4",
+          timeout:3000
+        })
       })
     }
 
